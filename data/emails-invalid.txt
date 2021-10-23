@@ -1,0 +1,3 @@
+Also-not-valid-mail
+anneberger@example.com
+Not-valid-email
