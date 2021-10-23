@@ -7,10 +7,7 @@ export const sendEmails = async (emails) => {
     body: JSON.stringify({ emails: emails }),
   };
 
-  const response = await fetch(
-    `${BACKEND_URL}/send`,
-    requestOptions
-  );
+  const response = await fetch(`${BACKEND_URL}/send`, requestOptions);
 
   let message = "";
   let data = [];

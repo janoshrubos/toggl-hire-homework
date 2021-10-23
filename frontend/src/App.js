@@ -7,6 +7,6 @@ const App = () => {
       <FileUploadForm />
     </div>
   );
-}
+};
 
 export default App;
