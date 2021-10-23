@@ -171,3 +171,7 @@ body {
   color: #a1a1aa;
   font-size: 12px;
 }
+
+.error-list {
+  padding: 0;
+}

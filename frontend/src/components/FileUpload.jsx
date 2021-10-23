@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import Message from "./Message";
 import DropZone from "./DropZone";
+import { sendEmails } from "../services/apiHandler";
 
 const FileUpload = () => {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState(null);
 
-  const fileHandler = async (files) => {
-    setMessages([]);
+  const fileHandler = async (eventFiles) => {
+    setMessage(null);
 
-    const emails = Array.from(files).map((file) => {
+    const emails = Array.from(eventFiles).map((file) => {
       const reader = new FileReader();
       const fileExtension = file.name.split(".").pop();
+
       if (fileExtension !== "txt") {
-        addMessage(true, `Unsupported file extension: ${fileExtension}`);
+        setMessage({
+          message: `Unsupported file extension: ${fileExtension}`,
+          ok: false,
+        });
         return null;
       }
       return new Promise((resolve) => {
@@ -37,45 +42,15 @@ const FileUpload = () => {
       })
       .flat();
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ emails: emails }),
-    };
     setIsLoading(true);
-    setMessages([]);
+    setMessage(null);
 
-    fetch(`${process.env.REACT_APP_BACKEND}/send`, requestOptions).then(
-      (response) => {
-        if (response.status === 200) {
-          addMessage(false, "Emails sent successfully!");
-          setFiles([]);
-        } else if (response.status === 422) {
-          response.json().then((data) => {
-            addMessage(
-              true,
-              "There was an error! Failed to send the following emails:",
-              data.emails
-            );
-          });
-        } else if (response.status === 500) {
-          addMessage(
-            true,
-            "There was an unexpcted server error! Please try again."
-          );
-        } else {
-          addMessage(true, "There was an unexpcted error! Please try again.");
-        }
-        setIsLoading(false);
-      }
-    );
-  };
-
-  const addMessage = (isError, text, errorList = []) => {
-    setMessages((messages) => [
-      ...messages,
-      { isError: isError, text: text, errorList: errorList },
-    ]);
+    const { message, ok, data } = await sendEmails(emails);
+    if (ok) {
+      setFiles([]);
+    }
+    setMessage({ message, ok, data });
+    setIsLoading(false);
   };
 
   return (
@@ -93,14 +68,7 @@ const FileUpload = () => {
             className="upload-btn"
             disabled={files.length === 0}
           />
-          {messages.map((message) => (
-            <Message
-              isError={message.isError}
-              close={() => {}}
-              text={message.text}
-              errorList={message.errorList}
-            />
-          ))}
+          {message && <Message item={message} />}
         </div>
       </form>
     </div>
