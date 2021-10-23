@@ -20,7 +20,7 @@ const FileUpload = () => {
           message: `Unsupported file extension: ${fileExtension}`,
           ok: false,
         });
-        return null;
+        return Promise.reject();
       }
       return new Promise((resolve) => {
         reader.onload = () =>
@@ -30,22 +30,19 @@ const FileUpload = () => {
     });
 
     const result = await Promise.all(emails);
-    setFiles(result.filter((file) => file !== null));
+    setFiles(result);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const emails = files
-      .map((file) => {
-        return file.data;
-      })
-      .flat();
+    const emails = files.reduce((a, { data }) => [...a, ...data], [])
 
     setIsLoading(true);
     setMessage(null);
 
     const { message, ok, data } = await sendEmails(emails);
+
     if (ok) {
       setFiles([]);
     }

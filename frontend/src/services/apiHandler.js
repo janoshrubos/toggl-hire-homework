@@ -1,3 +1,5 @@
+const BACKEND_URL = "https://toggl-hire-frontend-homework.vercel.app/api";
+
 export const sendEmails = async (emails) => {
   const requestOptions = {
     method: "POST",
@@ -6,7 +8,7 @@ export const sendEmails = async (emails) => {
   };
 
   const response = await fetch(
-    `${process.env.REACT_APP_BACKEND}/send`,
+    `${BACKEND_URL}/send`,
     requestOptions
   );
 

@@ -1,9 +1,10 @@
 import React from "react";
-import FileUpload from "./components/FileUpload";
-function App() {
+import FileUploadForm from "./components/FileUploadForm";
+
+const App = () => {
   return (
     <div className="app">
-      <FileUpload />
+      <FileUploadForm />
     </div>
   );
 }
