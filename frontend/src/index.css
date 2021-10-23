@@ -21,7 +21,6 @@ body {
   background-color: #f9fafb;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 25px;
-  overflow: scroll;
 }
 
 #fileInput {
@@ -104,11 +103,12 @@ body {
 }
 
 .message-container.success {
-  background-color: #bbf7d0;
+  background-color: #dcfce7;
   color: #166534;
 }
+
 .message-container.error {
-  background-color: #fca5a5;
+  background-color: #fee2e2;
   color: #dc2626;
 }
 
@@ -117,6 +117,7 @@ body {
   width: 80px;
   height: 80px;
 }
+
 .spinner:after {
   content: " ";
   display: block;
@@ -144,6 +145,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
+
 .file {
   display: flex;
   flex-direction: column;
