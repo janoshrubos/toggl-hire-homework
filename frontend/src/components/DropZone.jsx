@@ -1,23 +1,11 @@
 const DropZone = ({ isLoading, files, fileHandler }) => {
-  const dragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const dragEnter = (event) => {
-    event.preventDefault();
-  };
-
-  const dragLeave = (event) => {
+  const preventDefault = (event) => {
     event.preventDefault();
   };
 
   const fileDrop = (event) => {
     event.preventDefault();
     fileHandler(event.dataTransfer.files);
-  };
-
-  const dragClick = (event) => {
-    document.getElementById("fileInput").click();
   };
 
   const onFileChange = async (event) => {
@@ -27,13 +15,12 @@ const DropZone = ({ isLoading, files, fileHandler }) => {
   };
 
   return (
-    <div
+    <label
       className="drop-zone"
-      onDragOver={dragOver}
-      onDragEnter={dragEnter}
-      onDragLeave={dragLeave}
+      onDragOver={preventDefault}
+      onDragEnter={preventDefault}
+      onDragLeave={preventDefault}
       onDrop={fileDrop}
-      onClick={dragClick}
     >
       <input
         id="fileInput"
@@ -71,7 +58,7 @@ const DropZone = ({ isLoading, files, fileHandler }) => {
         )}
         {isLoading && <div className="spinner"></div>}
       </div>
-    </div>
+    </label>
   );
 };
 
