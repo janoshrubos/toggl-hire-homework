@@ -1,3 +1,6 @@
+
+**Live demo**: https://toggl-hire-homework-janos-hrubos.netlify.app
+
 # Toggl Hire Frontend Developer Homework
 
 The goal of this assignment is to see how familiar you are with JavaScript, React and web technologies. We tried to pick a task that is similar to what you would do at Toggl Hire, while keeping it minimal so you can finish it in a short time.
